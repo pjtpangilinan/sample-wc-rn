@@ -5,6 +5,14 @@ module.exports = {
     extraNodeModules: {
       crypto,
       url,
+      fs: require.resolve('react-native-fs'),
+      http: require.resolve('stream-http'),
+      https: require.resolve('https-browserify'),
+      net: require.resolve('react-native-tcp'),
+      os: require.resolve('os-browserify/browser.js'),
+      path: require.resolve('path-browserify'),
+      stream: require.resolve('readable-stream'),
+      vm: require.resolve('vm-browserify'),
     },
   },
   transformer: {

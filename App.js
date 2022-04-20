@@ -36,7 +36,7 @@
   async function getETH() {
     console.log('Hello getETH');
     Linking.openURL('https://metamask.app.link/dapp/sampledapp');
-    const {ethereum} = window;
+    // const {ethereum} = window;
   }  
 
   return (
@@ -66,22 +66,6 @@
      backgroundColor: '#27292A',
      justifyContent: 'center',
    },
-   sectionContainer: {
-     marginTop: 32,
-     paddingHorizontal: 24,
-   },
-   sectionTitle: {
-     fontSize: 24,
-     fontWeight: '600',
-   },
-   sectionDescription: {
-     marginTop: 8,
-     fontSize: 18,
-     fontWeight: '400',
-   },
-   highlight: {
-     fontWeight: '700',
-   },
    buttonStyle: {
      backgroundColor: '#7DE24E',
      borderWidth: 0,
@@ -94,12 +78,6 @@
      marginRight: 35,
      marginTop: 20,
      marginBottom: 25,
-   },
-   mainBody: {
-     flex: 1,
-     justifyContent: 'center',
-     backgroundColor: 'white',
-     alignContent: 'center',
    },
    registerTextStyle: {
      color: 'white',
