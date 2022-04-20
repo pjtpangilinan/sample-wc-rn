@@ -16,12 +16,14 @@ import {
   Linking,
   Platform,
 } from 'react-native';
-import { useWalletConnect, withWalletConnect } from '@walletconnect/react-native-dapp';
-import { AsyncStorage } from '@react-native-async-storage/async-storage' ;
-// const { AsyncStorage } = require('@react-native-async-storage/async-storage');
+import {
+  useWalletConnect,
+  withWalletConnect,
+} from '@walletconnect/react-native-dapp';
+import {AsyncStorage} from '@react-native-async-storage/async-storage';
 
 const App: () => Node = () => {
-  const [message, setMessage] = useState('hello');
+  const [message, setMessage] = useState('hellos');
 
   const connector = useWalletConnect();
 
@@ -38,10 +40,10 @@ const App: () => Node = () => {
     Linking.openURL('https://metamask.app.link/dapp/sampledapp');
     // const {ethereum} = window;
   }
-
+  
   return (
     <View style={styles.container}>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={styles.buttonStyle}
         activeOpacity={0.5}
         onPress={() => {getETH()}}
@@ -54,9 +56,9 @@ const App: () => Node = () => {
         style={styles.registerTextStyle}
         onPress={() => Linking.openURL('https://ethereum.org/en/wallets/')}>
         What are wallets?
-      </Text>
+      </Text> */}
 
-      {/* {!connector.connected && (
+      {!connector.connected && (
         <TouchableOpacity
           style={styles.buttonStyle}
           activeOpacity={0.5}
@@ -76,7 +78,7 @@ const App: () => Node = () => {
           }}>
           <Text style={styles.buttonTextStyle}>Connect a Wallet</Text>
         </TouchableOpacity>
-      )} */}
+      )}
     </View>
     );
 };
@@ -117,15 +119,15 @@ const styles = StyleSheet.create({
   },
 });
 
- export default App;
+//  export default App;
 
 
-// export default withWalletConnect(App, {
-//   clientMeta: {
-//     description: 'Connect with WalletConnect',
-//   },
-//   redirectUrl: Platform.OS === 'web' ? window.location.origin : 'yourappscheme://',
-//   storageOptions: {
-//     asyncStorage: AsyncStorage,
-//   },
-// });
+export default withWalletConnect(App, {
+  clientMeta: {
+    description: 'Connect with WalletConnect',
+  },
+  redirectUrl: Platform.OS === 'web' ? window.location.origin : 'myapp://',
+  storageOptions: {
+    asyncStorage: AsyncStorage,
+  },
+});
