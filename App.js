@@ -9,18 +9,15 @@
  import React, { useState } from 'react';
  import type {Node} from 'react';
  import {
-   SafeAreaView,
-   ScrollView,
-   StatusBar,
    StyleSheet,
    Text,
-   useColorScheme,
    View,
    TouchableOpacity,
    Linking,
  } from 'react-native';
- import { useWalletConnect } from '@walletconnect/react-native-dapp';
-
+ import { useWalletConnect, withWalletConnect } from '@walletconnect/react-native-dapp';
+//  import AsyncStorage from '@react-native-async-storage/async-storage';
+ const { AsyncStorage } = require('@react-native-async-storage/async-storage');
  
  const App: () => Node = () => {
   const [message, setMessage] = useState('hello');
