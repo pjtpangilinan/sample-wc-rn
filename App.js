@@ -16,10 +16,9 @@ import {
   Platform,
 } from 'react-native';
 import WalletConnectProvider, {useWalletConnect} from '@walletconnect/react-native-dapp';
-// import {AsyncStorage} from '@react-native-async-storage/async-storage';
-const { AsyncStorage } = require('@react-native-async-storage/async-storage');
+import {AsyncStorage} from '@react-native-async-storage/async-storage';
 
-const SampleWCConnect = () => {
+function SampleWCConnect(){
   const [message, setMessage] = useState('hellos');
 
   const connector = useWalletConnect();
@@ -44,7 +43,7 @@ const SampleWCConnect = () => {
           style={styles.buttonStyle}
           activeOpacity={0.5}
           onPress={() => {
-            connectWallet()
+            connectWallet();
           }}>
           <Text style={styles.buttonTextStyle}>Connect a Wallet</Text>
         </TouchableOpacity>
@@ -55,7 +54,7 @@ const SampleWCConnect = () => {
           style={styles.buttonStyle}
           activeOpacity={0.5}
           onPress={() => {
-            killSession()
+            killSession();
           }}>
           <Text style={styles.buttonTextStyle}>Log Out</Text>
         </TouchableOpacity>
@@ -117,9 +116,10 @@ const styles = StyleSheet.create({
 export default function App() {
   return (
     <WalletConnectProvider
-      storageOptions= {{asyncStorage: AsyncStorage}}
-      redirectUrl="myapp://">
-      <SampleWCConnect />;
+      storageOptions={{asyncStorage: AsyncStorage}}
+      redirectUrl="myapp://"
+    >
+      <SampleWCConnect />
     </WalletConnectProvider>
   ) 
 };
