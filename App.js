@@ -6,8 +6,7 @@
  * @flow strict-local
  */
 
-import React, { useState } from 'react';
-import type {Node} from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -16,13 +15,11 @@ import {
   Linking,
   Platform,
 } from 'react-native';
-import {
-  useWalletConnect,
-  withWalletConnect,
-} from '@walletconnect/react-native-dapp';
-import {AsyncStorage} from '@react-native-async-storage/async-storage';
+import WalletConnectProvider, {useWalletConnect} from '@walletconnect/react-native-dapp';
+// import {AsyncStorage} from '@react-native-async-storage/async-storage';
+const { AsyncStorage } = require('@react-native-async-storage/async-storage');
 
-const App: () => Node = () => {
+const SampleWCConnect = () => {
   const [message, setMessage] = useState('hellos');
 
   const connector = useWalletConnect();
@@ -38,47 +35,31 @@ const App: () => Node = () => {
   async function getETH() {
     console.log('Hello getETH');
     Linking.openURL('https://metamask.app.link/dapp/sampledapp');
-    // const {ethereum} = window;
   }
-  
+
   return (
     <View style={styles.container}>
-      {/* <TouchableOpacity
-        style={styles.buttonStyle}
-        activeOpacity={0.5}
-        onPress={() => {getETH()}}
-        >
-        <Text style={styles.buttonTextStyle}>
-          Crypto Wallet Logins {message}
-        </Text>
-      </TouchableOpacity>
-      <Text
-        style={styles.registerTextStyle}
-        onPress={() => Linking.openURL('https://ethereum.org/en/wallets/')}>
-        What are wallets?
-      </Text> */}
-
-      {!connector.connected && (
+      {!connector.connected ? (
         <TouchableOpacity
           style={styles.buttonStyle}
           activeOpacity={0.5}
           onPress={() => {
-            connectWallet();
+            connectWallet()
           }}>
           <Text style={styles.buttonTextStyle}>Connect a Wallet</Text>
         </TouchableOpacity>
-      )}
+      ) : null}
 
-      {!!connector.connected && (
+      {!!connector.connected ? (
         <TouchableOpacity
           style={styles.buttonStyle}
           activeOpacity={0.5}
           onPress={() => {
-            killSession();
+            killSession()
           }}>
-          <Text style={styles.buttonTextStyle}>Connect a Wallet</Text>
+          <Text style={styles.buttonTextStyle}>Log Out</Text>
         </TouchableOpacity>
-      )}
+      ) : null}
     </View>
     );
 };
@@ -109,7 +90,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 14,
     alignSelf: 'center',
-    // padding: 1,
   },
   buttonTextStyle: {
     color: '#FFFFFF',
@@ -119,15 +99,27 @@ const styles = StyleSheet.create({
   },
 });
 
-//  export default App;
 
+// export default withWalletConnect(App, {
+//   clientMeta: {
+//     description: 'Connect with WalletConnect',
+//   },
+//   // redirectUrl: Platform.OS === 'web' ? window.location.origin : 'myapp://',
+//   storageOptions: {
+//     asyncStorage: AsyncStorage,
+//   },
+// });
 
-export default withWalletConnect(App, {
-  clientMeta: {
-    description: 'Connect with WalletConnect',
-  },
-  redirectUrl: Platform.OS === 'web' ? window.location.origin : 'myapp://',
-  storageOptions: {
-    asyncStorage: AsyncStorage,
-  },
-});
+// export default function App() {
+//   return <SampleWCConnect />;
+// };
+
+export default function App() {
+  return (
+    <WalletConnectProvider
+      storageOptions= {{asyncStorage: AsyncStorage}}
+      redirectUrl="myapp://">
+      <SampleWCConnect />;
+    </WalletConnectProvider>
+  ) 
+};
