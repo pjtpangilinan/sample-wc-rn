@@ -18,9 +18,26 @@ import {
 import WalletConnectProvider, {useWalletConnect} from '@walletconnect/react-native-dapp';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-function SampleWCConnect(){
-  const [message, setMessage] = useState('hellos');
+const shortenAddress = (address: string) => {
+  return `${address.slice(0, 6)}...${address.slice(
+    address.length - 4,
+    address.length
+  )}`;
+}
 
+const Line = () => {
+  return (
+      <View style={{
+          height: 1,
+          backgroundColor: '#C0C0C0',
+          alignSelf: 'center',
+          marginVertical: 20,
+          width: '80%'
+      }} />
+  )
+}
+
+function SampleWCConnect(){
   const connector = useWalletConnect();
 
   const connectWallet = React.useCallback(() => {
@@ -50,15 +67,18 @@ function SampleWCConnect(){
       ) : null}
 
       {!!connector.connected ? (
-        <TouchableOpacity
-          style={styles.buttonStyle}
-          activeOpacity={0.5}
-          onPress={() => {
-            killSession();
-          }}>
-          <Text>{connector.accounts[0]}</Text>
-          <Text style={styles.buttonTextStyle}>Log Out</Text>
-        </TouchableOpacity>
+        <>
+          <Text>Address: {shortenAddress(connector.accounts[0])}</Text>
+          <Line />
+          <TouchableOpacity
+            style={styles.buttonStyle}
+            activeOpacity={0.5}
+            onPress={() => {
+              killSession();
+            }}>
+            <Text style={styles.buttonTextStyle}>Log Out</Text>
+          </TouchableOpacity>
+        </>
       ) : null}
     </View>
     );
@@ -68,20 +88,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 10,
-    backgroundColor: '#27292A',
+    alignItems: 'center',
+    // backgroundColor: '#27292A',
     justifyContent: 'center',
   },
   buttonStyle: {
     backgroundColor: '#7DE24E',
     borderWidth: 0,
-    color: 'FFFFFF',
+    color: '#FFFFFF',
     borderColor: '#7DE24E',
     height: 40,
     alignItems: 'center',
     borderRadius: 30,
     marginLeft: 35,
     marginRight: 35,
-    marginTop: 20,
     marginBottom: 25,
   },
   registerTextStyle: {
@@ -94,25 +114,15 @@ const styles = StyleSheet.create({
   buttonTextStyle: {
     color: '#FFFFFF',
     paddingVertical: 10,
+    paddingHorizontal: 15,
     fontSize: 16,
     fontWeight: '600',
   },
+  separator: {
+    flexDirection: 'row',
+  },
 });
 
-
-// export default withWalletConnect(App, {
-//   clientMeta: {
-//     description: 'Connect with WalletConnect',
-//   },
-//   // redirectUrl: Platform.OS === 'web' ? window.location.origin : 'myapp://',
-//   storageOptions: {
-//     asyncStorage: AsyncStorage,
-//   },
-// });
-
-// export default function App() {
-//   return <SampleWCConnect />;
-// };
 
 
 export default function App() {
